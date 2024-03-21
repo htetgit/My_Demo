@@ -1,6 +1,18 @@
-# Define environments
+ Define environments
 environments:
   - name: Test-env
+
+# Define agents
+agents:
+  - name: admin
+    resources: [windows]
+    environment_variables:
+      JAVA_HOME: "C:\\Program Files\\Java\\jdk-11"
+    hostname: 127.0.0.1
+    operating_system: Windows 10
+    agent_state: Idle
+    free_space: "857.68 GB"
+    environments: [Test-env]
 
 # Define pipelines
 pipelines:
@@ -14,12 +26,12 @@ pipelines:
       - name: Build
         jobs:
           - name: Compile
+            agent: admin
             tasks:
               - exec: mvn clean compile
       - name: Test
         jobs:
           - name: UnitTest
+            agent: admin
             tasks:
               - exec: mvn test
-    environment_variables:
-      JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
