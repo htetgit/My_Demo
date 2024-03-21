@@ -1,0 +1,25 @@
+# Define environments
+environments:
+  - name: Test-env
+
+# Define pipelines
+pipelines:
+  - name: MyPipeline
+    group: myfirstpipeline  # Group name
+    materials:
+      git:
+        url: https://github.com/htetgit/My_Demo.git
+        branch: main
+    stages:
+      - name: Build
+        jobs:
+          - name: Compile
+            tasks:
+              - exec: mvn clean compile
+      - name: Test
+        jobs:
+          - name: UnitTest
+            tasks:
+              - exec: mvn test
+    environment_variables:
+      JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
